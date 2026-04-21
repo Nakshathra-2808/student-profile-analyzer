@@ -1,120 +1,246 @@
-
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Student Profile Analyzer</title>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
-
-  <!-- ✅ FIXED PATH -->
-
-  <link rel="stylesheet" href="style.css" />
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Student Profile Analyzer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<link rel="stylesheet" href="style.css"/>
 </head>
 <body>
 
-  <!-- Header -->
-
-  <header class="header">
-    <div class="header-inner">
-      <div class="logo">
-        <span class="logo-icon">◈</span>
-        <span class="logo-text">StudentScope</span>
-      </div>
-      <p class="header-sub">Profile Analyzer Dashboard</p>
-    </div>
-    <div class="grid-bg"></div>
-  </header>
-
-  <!-- Main -->
-
-  <main class="main">
-
-```
-<!-- Buttons -->
-<section class="action-bar">
-  <button class="btn btn-primary" onclick="loadStudents()">
-    ⟳ Load Students
-  </button>
-
-  <button class="btn btn-secondary" onclick="loadAnalytics()">
-    ◎ Show Analytics
-  </button>
-
-  <div id="status-msg" class="status-msg"></div>
-</section>
-
-<!-- Analytics -->
-<section id="analytics-panel" class="panel hidden">
-  <h2 class="panel-title">Analytics Overview</h2>
-
-  <div class="analytics-grid">
-    <div class="stat-card">
-      <span>Total Students</span>
-      <span id="val-total">—</span>
-    </div>
-
-    <div class="stat-card">
-      <span>Average GPA</span>
-      <span id="val-gpa">—</span>
-    </div>
-
-    <div class="chart-card">
-      <h3>GPA Distribution</h3>
-      <div id="gpa-chart"></div>
-    </div>
-
-    <div class="chart-card">
-      <h3>Top Skills</h3>
-      <div id="skills-chart"></div>
-    </div>
-
-    <div class="chart-card">
-      <h3>Top Interests</h3>
-      <div id="interests-tags"></div>
+<!-- SIDEBAR -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-logo">
+    <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+      <rect width="28" height="28" rx="8" fill="var(--accent)"/>
+      <path d="M7 21L14 7L21 21" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M9.5 16.5H18.5" stroke="white" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+    <span class="logo-text">StudentScope</span>
+  </div>
+  <nav class="sidebar-nav">
+    <a class="nav-item active" data-tab="analytics" onclick="switchTab('analytics',this)">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+      Dashboard
+    </a>
+    <a class="nav-item" data-tab="students" onclick="switchTab('students',this)">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      Students
+    </a>
+    <a class="nav-item" data-tab="performance" onclick="switchTab('performance',this)">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      Performance
+    </a>
+  </nav>
+  <div class="sidebar-footer">
+    <div class="db-status" id="db-status">
+      <span class="dot dot-loading"></span>
+      <span>Connecting…</span>
     </div>
   </div>
-</section>
+</aside>
 
-<!-- Students -->
-<section id="students-panel" class="panel hidden">
-  <h2 class="panel-title">Student Profiles</h2>
+<!-- MAIN -->
+<main class="main-content">
 
-  <input id="search-input" type="text"
-    placeholder="Search..."
-    oninput="filterStudents()" />
+  <!-- TOP BAR -->
+  <header class="topbar">
+    <div class="topbar-left">
+      <h1 class="page-title" id="page-title">Dashboard</h1>
+      <span class="page-sub" id="page-sub">Analytics Overview</span>
+    </div>
+    <div class="topbar-right">
+      <button class="btn-refresh" onclick="refreshAll()" title="Refresh data">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+      </button>
+    </div>
+  </header>
 
-  <div id="students-count"></div>
+  <!-- ─── TAB: ANALYTICS ──────────────────────────────── -->
+  <section class="tab-panel active" id="tab-analytics">
 
-  <table>
-    <thead>
-      <tr>
-        <th>#</th>
-        <th>Name</th>
-        <th>GPA</th>
-        <th>Skills</th>
-        <th>Interests</th>
-      </tr>
-    </thead>
-    <tbody id="students-tbody"></tbody>
-  </table>
-</section>
-```
+    <!-- KPI row -->
+    <div class="kpi-row">
+      <div class="kpi-card" style="--accent-hue:210">
+        <span class="kpi-label">Total Students</span>
+        <span class="kpi-value" id="k-total">—</span>
+        <span class="kpi-sub">Enrolled</span>
+      </div>
+      <div class="kpi-card" style="--accent-hue:145">
+        <span class="kpi-label">Avg GPA</span>
+        <span class="kpi-value" id="k-gpa">—</span>
+        <span class="kpi-sub">out of 4.0</span>
+      </div>
+      <div class="kpi-card" style="--accent-hue:35">
+        <span class="kpi-label">Avg CGPA</span>
+        <span class="kpi-value" id="k-cgpa">—</span>
+        <span class="kpi-sub">Cumulative</span>
+      </div>
+      <div class="kpi-card" style="--accent-hue:270">
+        <span class="kpi-label">Avg Attendance</span>
+        <span class="kpi-value" id="k-att">—</span>
+        <span class="kpi-sub">Percent</span>
+      </div>
+      <div class="kpi-card" style="--accent-hue:340">
+        <span class="kpi-label">Avg Projects</span>
+        <span class="kpi-value" id="k-proj">—</span>
+        <span class="kpi-sub">Per student</span>
+      </div>
+    </div>
 
-  </main>
+    <!-- Chart grid row 1 -->
+    <div class="chart-grid-2">
+      <div class="chart-card">
+        <div class="chart-header">
+          <span class="chart-title">Grade Distribution</span>
+          <span class="chart-hint">All students</span>
+        </div>
+        <div class="chart-wrap h260"><canvas id="gradeChart"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-header">
+          <span class="chart-title">GPA Spread</span>
+          <span class="chart-hint">Fine-grained buckets</span>
+        </div>
+        <div class="chart-wrap h260"><canvas id="gpaChart"></canvas></div>
+      </div>
+    </div>
 
-  <!-- Footer -->
+    <!-- Chart grid row 2 -->
+    <div class="chart-grid-3">
+      <div class="chart-card span-2">
+        <div class="chart-header">
+          <span class="chart-title">Department Breakdown</span>
+          <span class="chart-hint">Avg GPA & student count</span>
+        </div>
+        <div class="chart-wrap h220"><canvas id="deptChart"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-header">
+          <span class="chart-title">Gender Split</span>
+          <span class="chart-hint">Student population</span>
+        </div>
+        <div class="chart-wrap h220"><canvas id="genderChart"></canvas></div>
+      </div>
+    </div>
 
-  <footer class="footer">
-    <span>Student Profile Analyzer · Flask + MySQL</span>
-  </footer>
+    <!-- Chart grid row 3 -->
+    <div class="chart-grid-2">
+      <div class="chart-card">
+        <div class="chart-header">
+          <span class="chart-title">Top Skills</span>
+          <span class="chart-hint">Skill frequency across all students</span>
+        </div>
+        <div id="skills-bars" class="skills-bar-container"></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-header">
+          <span class="chart-title">Attendance vs GPA</span>
+          <span class="chart-hint">Correlation scatter</span>
+        </div>
+        <div class="chart-wrap h280"><canvas id="attGpaChart"></canvas></div>
+      </div>
+    </div>
 
-  <!-- ✅ FIXED PATH -->
+    <!-- Top 10 leaderboard -->
+    <div class="chart-card full-width">
+      <div class="chart-header">
+        <span class="chart-title">Top 10 Students</span>
+        <span class="chart-hint">Ranked by CGPA</span>
+      </div>
+      <div id="leaderboard" class="leaderboard"></div>
+    </div>
 
-  <script src="app.js"></script>
+  </section>
 
+  <!-- ─── TAB: STUDENTS ───────────────────────────────── -->
+  <section class="tab-panel" id="tab-students">
+    <div class="filter-bar">
+      <div class="search-wrap">
+        <svg class="search-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input id="s-search" class="search-input" placeholder="Search name…" oninput="debounceFilter()"/>
+      </div>
+      <select id="s-dept"  class="filter-sel" onchange="applyFilter()"><option value="">All Departments</option></select>
+      <select id="s-year"  class="filter-sel" onchange="applyFilter()">
+        <option value="">All Years</option>
+        <option>1</option><option>2</option><option>3</option><option>4</option>
+      </select>
+      <select id="s-grade" class="filter-sel" onchange="applyFilter()"><option value="">All Grades</option></select>
+      <span class="filter-count" id="filter-count"></span>
+    </div>
+
+    <div class="table-wrap">
+      <table class="data-table" id="data-table">
+        <thead>
+          <tr>
+            <th onclick="sortBy('id')">#</th>
+            <th onclick="sortBy('name')">Name</th>
+            <th onclick="sortBy('department')">Department</th>
+            <th onclick="sortBy('year')">Year</th>
+            <th onclick="sortBy('gpa')">GPA</th>
+            <th onclick="sortBy('cgpa')">CGPA</th>
+            <th onclick="sortBy('attendance')">Attendance</th>
+            <th onclick="sortBy('grade')">Grade</th>
+            <th onclick="sortBy('projects')">Projects</th>
+            <th onclick="sortBy('internships')">Internships</th>
+            <th>Skills</th>
+          </tr>
+        </thead>
+        <tbody id="table-body"></tbody>
+      </table>
+    </div>
+    <div class="pagination" id="pagination"></div>
+  </section>
+
+  <!-- ─── TAB: PERFORMANCE ────────────────────────────── -->
+  <section class="tab-panel" id="tab-performance">
+    <div class="chart-grid-2">
+      <div class="chart-card">
+        <div class="chart-header">
+          <span class="chart-title">Avg GPA by Year</span>
+          <span class="chart-hint">Academic progression</span>
+        </div>
+        <div class="chart-wrap h280"><canvas id="yearChart"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-header">
+          <span class="chart-title">Avg Projects by Grade</span>
+          <span class="chart-hint">Activity vs academic performance</span>
+        </div>
+        <div class="chart-wrap h280"><canvas id="projGradeChart"></canvas></div>
+      </div>
+    </div>
+    <div class="chart-grid-2">
+      <div class="chart-card">
+        <div class="chart-header">
+          <span class="chart-title">Top Interests</span>
+          <span class="chart-hint">What students care about</span>
+        </div>
+        <div id="interest-tags" class="interest-cloud"></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-header">
+          <span class="chart-title">Dept Avg GPA vs Attendance</span>
+          <span class="chart-hint">Bubble = student count</span>
+        </div>
+        <div class="chart-wrap h280"><canvas id="deptBubbleChart"></canvas></div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- STUDENT DETAIL MODAL -->
+<div class="modal-overlay" id="modal-overlay" onclick="closeModal()">
+  <div class="modal" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div id="modal-body"></div>
+  </div>
+</div>
+
+<script src="app.js"></script>
 </body>
 </html>
