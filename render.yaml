@@ -2,6 +2,5 @@ services:
   - type: web
     name: student-profile-analyzer
     runtime: python
-    rootDir: backend
-    buildCommand: "pip install -r requirements.txt && python create_db.py"
-    startCommand: "gunicorn app:app"
+    buildCommand: "pip install -r requirements.txt && python backend/create_db.py"
+    startCommand: "gunicorn --chdir backend app:app"
