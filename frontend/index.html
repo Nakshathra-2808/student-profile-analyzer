@@ -1,0 +1,120 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Profile Analyzer</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- ✅ FIXED PATH -->
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Header -->
+
+  <header class="header">
+    <div class="header-inner">
+      <div class="logo">
+        <span class="logo-icon">◈</span>
+        <span class="logo-text">StudentScope</span>
+      </div>
+      <p class="header-sub">Profile Analyzer Dashboard</p>
+    </div>
+    <div class="grid-bg"></div>
+  </header>
+
+  <!-- Main -->
+
+  <main class="main">
+
+```
+<!-- Buttons -->
+<section class="action-bar">
+  <button class="btn btn-primary" onclick="loadStudents()">
+    ⟳ Load Students
+  </button>
+
+  <button class="btn btn-secondary" onclick="loadAnalytics()">
+    ◎ Show Analytics
+  </button>
+
+  <div id="status-msg" class="status-msg"></div>
+</section>
+
+<!-- Analytics -->
+<section id="analytics-panel" class="panel hidden">
+  <h2 class="panel-title">Analytics Overview</h2>
+
+  <div class="analytics-grid">
+    <div class="stat-card">
+      <span>Total Students</span>
+      <span id="val-total">—</span>
+    </div>
+
+    <div class="stat-card">
+      <span>Average GPA</span>
+      <span id="val-gpa">—</span>
+    </div>
+
+    <div class="chart-card">
+      <h3>GPA Distribution</h3>
+      <div id="gpa-chart"></div>
+    </div>
+
+    <div class="chart-card">
+      <h3>Top Skills</h3>
+      <div id="skills-chart"></div>
+    </div>
+
+    <div class="chart-card">
+      <h3>Top Interests</h3>
+      <div id="interests-tags"></div>
+    </div>
+  </div>
+</section>
+
+<!-- Students -->
+<section id="students-panel" class="panel hidden">
+  <h2 class="panel-title">Student Profiles</h2>
+
+  <input id="search-input" type="text"
+    placeholder="Search..."
+    oninput="filterStudents()" />
+
+  <div id="students-count"></div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>GPA</th>
+        <th>Skills</th>
+        <th>Interests</th>
+      </tr>
+    </thead>
+    <tbody id="students-tbody"></tbody>
+  </table>
+</section>
+```
+
+  </main>
+
+  <!-- Footer -->
+
+  <footer class="footer">
+    <span>Student Profile Analyzer · Flask + MySQL</span>
+  </footer>
+
+  <!-- ✅ FIXED PATH -->
+
+  <script src="app.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,126 @@
+-- ============================================================
+-- Student Profile Analyzer — Database Setup
+-- Run:  mysql -u root -p < schema.sql
+-- ============================================================
+
+-- 1. Create and select the database
+CREATE DATABASE IF NOT EXISTS student_analyzer
+  CHARACTER SET utf8mb4
+  COLLATE utf8mb4_unicode_ci;
+
+USE student_analyzer;
+
+-- 2. Create the students table
+DROP TABLE IF EXISTS students;
+
+CREATE TABLE students (
+  id        INT          NOT NULL AUTO_INCREMENT,
+  name      VARCHAR(100) NOT NULL,
+  gpa       DECIMAL(3,2) NOT NULL,
+  skills    VARCHAR(255) NOT NULL,   -- comma-separated list
+  interests VARCHAR(255) NOT NULL,   -- comma-separated list
+  PRIMARY KEY (id)
+);
+
+-- 3. Insert 100 realistic fake student records
+INSERT INTO students (name, gpa, skills, interests) VALUES
+('Aarav Sharma',       3.85, 'Python, ML, SQL',              'Data Science, Research'),
+('Priya Nair',         3.72, 'Java, React, SQL',             'Web Dev, Open Source'),
+('Rohan Mehta',        3.10, 'C++, Algorithms',              'Competitive Programming'),
+('Anjali Singh',       3.55, 'Python, Data Analysis',        'Statistics, Finance'),
+('Karan Verma',        2.90, 'HTML, CSS, JavaScript',        'Frontend Design, Gaming'),
+('Sneha Iyer',         3.95, 'Python, ML, Deep Learning',    'AI Research, Robotics'),
+('Vikram Patel',       3.30, 'Java, Spring Boot, SQL',       'Backend Dev, DevOps'),
+('Meera Krishnan',     3.68, 'React, TypeScript, GraphQL',   'Web Dev, UX Design'),
+('Arjun Gupta',        2.75, 'Python, Flask',                'Web Scraping, Automation'),
+('Divya Reddy',        3.88, 'ML, Python, TensorFlow',       'AI Ethics, Research'),
+('Sahil Khan',         3.15, 'JavaScript, Node.js',          'Full Stack Dev, Startups'),
+('Pooja Mishra',       3.42, 'SQL, Power BI, Excel',         'Business Analytics'),
+('Aditya Choudhary',   3.78, 'Python, R, Statistics',        'Data Science, Healthcare'),
+('Nisha Kapoor',       2.85, 'HTML, CSS, Figma',             'UI Design, Branding'),
+('Rahul Tiwari',       3.60, 'Java, Android, Kotlin',        'Mobile Dev, Gaming'),
+('Kavya Pillai',       3.92, 'Python, ML, NLP',              'Linguistics, AI Research'),
+('Manish Rao',         3.05, 'C, Embedded Systems',          'IoT, Hardware'),
+('Swati Joshi',        3.48, 'React, Redux, CSS',            'Frontend Dev, Accessibility'),
+('Deepak Nayak',       3.20, 'SQL, MongoDB, Express',        'Database Design'),
+('Riya Bose',          3.75, 'Python, Django, REST API',     'Backend Dev, Open Source'),
+('Akash Sinha',        2.95, 'JavaScript, Vue.js',           'Web Dev, Photography'),
+('Tanvi Sharma',       3.65, 'Java, Microservices, Docker',  'Cloud, DevOps'),
+('Nikhil Menon',       3.38, 'Python, Pandas, NumPy',        'Data Analysis, Finance'),
+('Sonam Gupta',        3.80, 'ML, Computer Vision, OpenCV',  'Autonomous Vehicles'),
+('Kartik Malhotra',    3.12, 'HTML, PHP, MySQL',             'CMS, Blogging'),
+('Ananya Pillai',      3.55, 'React, Next.js, Tailwind',     'Web Dev, Startups'),
+('Gaurav Saxena',      2.80, 'Python, Scripting',            'Automation, Gaming'),
+('Ishaan Roy',         3.90, 'ML, Python, Reinforcement L',  'Game AI, Research'),
+('Ritika Singh',       3.45, 'Java, Spring, Hibernate',      'Enterprise Software'),
+('Varun Agarwal',      3.70, 'React, Node.js, MongoDB',      'MERN Stack, Freelancing'),
+('Pallavi Desai',      3.25, 'SQL, Tableau, Python',         'Business Intelligence'),
+('Suresh Kumar',       3.58, 'C++, Game Dev, Unity',         'Game Development'),
+('Lakshmi Venkat',     3.82, 'Python, ML, Feature Engineering','Kaggle, Data Science'),
+('Abhishek Misra',     3.00, 'JavaScript, jQuery',           'Web Dev, SEO'),
+('Preethi Nair',       3.68, 'Java, Cloud, AWS',             'Cloud Computing'),
+('Mohit Srivastava',   3.35, 'Python, SQL, Power BI',        'Data Analytics'),
+('Neha Tiwari',        3.88, 'React, TypeScript, Testing',   'Quality Assurance'),
+('Sandeep Rathi',      2.72, 'C, Linux, Bash',               'Systems Programming'),
+('Archana Subramanian',3.50, 'Python, NLP, BERT',            'Text Mining, Research'),
+('Vivek Pandey',       3.78, 'Java, Kafka, Spark',           'Big Data, Streaming'),
+('Kritika Bhatia',     3.42, 'Figma, CSS, JavaScript',       'Product Design'),
+('Siddharth Rao',      3.62, 'Python, Flask, Docker',        'Backend Dev, DevOps'),
+('Harini Krishnamurthy',3.93,'ML, Statistics, R',            'Biostatistics'),
+('Ankit Gupta',        3.18, 'JavaScript, React Native',     'Mobile Apps'),
+('Reshma Patel',       3.70, 'SQL, Python, Spark',           'Data Engineering'),
+('Tejas Kulkarni',     3.28, 'Java, Android',                'Mobile Dev, Photography'),
+('Madhuri Iyer',       3.55, 'Python, ML, Scikit-learn',     'Predictive Modeling'),
+('Neeraj Sharma',      3.80, 'React, Redux, GraphQL',        'Frontend Architecture'),
+('Sunita Agarwal',     3.08, 'HTML, CSS, Bootstrap',         'Web Design, Blogging'),
+('Rajeev Pillai',      3.65, 'Python, TensorFlow, Keras',    'Deep Learning'),
+('Poornima Nair',      3.48, 'SQL, Hadoop, Hive',            'Big Data Analytics'),
+('Ashwin Menon',       3.75, 'C++, Python, Algorithms',      'Competitive Programming'),
+('Bhavna Jain',        3.38, 'React, Styled-components',     'Component Libraries'),
+('Gautam Singh',       2.88, 'Java, MySQL',                  'Backend Dev, Cricket'),
+('Deepika Rajan',      3.92, 'Python, ML, AutoML',           'AI Products'),
+('Vishal Dubey',       3.22, 'JavaScript, Node.js, Redis',   'Caching, Performance'),
+('Harsha Vardhan',     3.60, 'Python, Django, Celery',       'Task Automation'),
+('Preeti Joshi',       3.78, 'Data Science, Python, Tableau','Visualization'),
+('Arun Krishnan',      3.32, 'Java, Spring Security',        'Cybersecurity'),
+('Mithila Desai',      3.68, 'React, PWA, Service Workers',  'Offline Web Apps'),
+('Pranav Kumar',       3.50, 'SQL, Python, Airflow',         'Data Pipelines'),
+('Shweta Agarwal',     3.83, 'ML, XGBoost, Feature Eng',     'Fintech, ML'),
+('Suraj Naik',         3.12, 'HTML, CSS, WordPress',         'Content Management'),
+('Yamini Reddy',       3.70, 'Python, Selenium, Pytest',     'Test Automation'),
+('Lokesh Sharma',      3.28, 'C#, .NET, SQL Server',         'Enterprise Apps'),
+('Chandani Patel',     3.58, 'Java, Microservices, Kubernetes','DevOps'),
+('Ramesh Babu',        2.92, 'Linux, Bash, Python',          'System Administration'),
+('Gayatri Menon',      3.88, 'Python, ML, Time Series',      'Forecasting, Finance'),
+('Kiran Rao',          3.45, 'React, JavaScript, Webpack',   'Build Tools'),
+('Sameer Kapoor',      3.68, 'Python, OpenCV, YOLO',         'Computer Vision'),
+('Lavanya Subramaniam',3.35, 'SQL, dbt, Snowflake',          'Analytics Engineering'),
+('Avinash Nair',       3.78, 'Python, FastAPI, PostgreSQL',  'API Development'),
+('Divyanka Sharma',    3.22, 'Java, JSP, Servlets',          'Web Applications'),
+('Naveen Kumar',       3.60, 'Python, PySpark, Delta Lake',  'Data Lakehouse'),
+('Padmini Iyer',       3.90, 'R, Statistics, ggplot2',       'Statistical Modeling'),
+('Rajesh Pillai',      3.38, 'JavaScript, Express, MongoDB', 'Full Stack Dev'),
+('Indrani Bhatt',      3.52, 'Python, Scrapy, BeautifulSoup','Web Scraping'),
+('Chandra Gupta',      3.72, 'Java, Android, Firebase',      'Mobile Dev'),
+('Subha Krishnan',     3.18, 'CSS, Sass, Design Systems',    'Frontend Design'),
+('Murali Varma',       3.65, 'Python, SQL, Power BI',        'Business Analytics'),
+('Rekha Sinha',        3.85, 'ML, NLP, Transformers',        'Conversational AI'),
+('Ajay Malhotra',      3.30, 'C++, DSA, Algorithms',         'Interview Prep'),
+('Lalita Rao',         3.55, 'React, Vue.js, Angular',       'Framework Comparison'),
+('Dinesh Babu',        2.98, 'MySQL, PHP, Apache',           'LAMP Stack'),
+('Kamala Nair',        3.75, 'Python, ML, Clustering',       'Unsupervised Learning'),
+('Raju Tiwari',        3.42, 'Java, Kafka, Elasticsearch',   'Search Systems'),
+('Sundar Venkataraman',3.88, 'Python, Go, Docker',           'Cloud Native'),
+('Jayalakshmi Pillai', 3.20, 'SQL, Python, Reporting',       'Data Reporting'),
+('Mani Shankar',       3.62, 'React, Next.js, SEO',          'Technical SEO'),
+('Vijaya Kumari',      3.48, 'Python, Pandas, EDA',          'Exploratory Analysis'),
+('Pradeep Nayak',      3.78, 'ML, Python, Model Deployment', 'MLOps'),
+('Bhargavi Suresh',    3.33, 'Java, REST, Swagger',          'API Design'),
+('Naresh Babu',        3.58, 'Python, Rust, Systems',        'Systems Programming'),
+('Sumitra Reddy',      3.90, 'ML, Python, Interpretability', 'Explainable AI'),
+('Balachandran Iyer',  3.25, 'SQL, Oracle, PL/SQL',          'Database Admin'),
+('Sujatha Varma',      3.70, 'React, TypeScript, Storybook', 'Design Systems'),
+('Kannan Pillai',      3.45, 'Python, Airflow, dbt',         'Data Engineering'),
+('Hema Subramaniam',   3.82, 'ML, SVM, Random Forest',       'Classical ML'),
+('Vinod Krishnan',     3.15, 'JavaScript, Socket.io',        'Real-time Apps'),
+('Sarala Menon',       3.60, 'Python, Django REST Framework','API Development');
